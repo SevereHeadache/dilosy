@@ -1,0 +1,20 @@
+name: dilosy #Application name
+interval: 30 #Refresh interval (seconds)
+port: 8080
+sources:
+  - name: source1
+    remote: false
+    paths:
+      - basepath: /path/to/file
+        filename: log1.txt
+      - basepath: /path/to/file
+        filename: log2.txt
+  - name: source2
+    remote: true
+    keypath: keys/id_rsa
+    host: example.com
+    port: 22
+    user: user
+    paths:
+      - basepath: /path/to/file
+        filename: log.txt

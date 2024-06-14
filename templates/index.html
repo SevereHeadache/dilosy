@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ .Title}}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/felipec.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+
+<style>
+    body {
+        width: 100vw;
+        margin: 0;
+        background: #1e1e22;
+        color: #fff;
+    }
+    #main {
+        width: 100%;
+    }
+    #main pre {
+        margin: 0;
+        padding: 1em;
+        white-space: pre-wrap;
+    }
+    #file {
+        position: fixed;
+        top: 1em;
+        right: 1em;
+        color: #fff;
+        background: #444746;
+        border: solid 0px;
+        padding: 0.35em 0.55em;
+        opacity: 0.35;
+        transition: 200ms;
+    }
+    #file:hover {
+        opacity: 1;
+    }
+</style>
+
+<body>
+    <div id="main">
+        <pre><code class="php">{{ .Content}}</code></pre>
+    </div>
+    <select id="file" onchange="change(this)">
+        <option value="">---</option>
+        {{range.FileSources}}
+            {{$path := .Path}}
+            <optgroup label="{{$path}}">
+                {{range.Filenames}}
+                    <option
+                        value="/{{$path}}/{{ .Value}}"
+                        {{if .Selected}}selected{{end}}
+                    >
+                        {{ .Value}}
+                    </option>
+                {{end}}
+            </optgroup>
+        {{end}}
+    </select>
+
+    <script>
+        hljs.highlightAll();
+        function change(obj) {
+            window.location.href = obj.value;
+        }
+    </script>
+</body>
+
+</html>
