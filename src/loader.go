@@ -95,19 +95,6 @@ func remoteFile(
 	}
 	defer client.Close()
 
-	session, err := client.NewSession()
-	if err != nil {
-		log.Print(err)
-		return
-	}
-	defer session.Close()
-
-	reader, err := session.StdoutPipe()
-	if err != nil {
-		log.Print(err)
-		return
-	}
-
 	if err := os.MkdirAll(storageDir+"/"+name, os.ModePerm); err != nil {
 		log.Print(err)
 		return
@@ -124,6 +111,19 @@ func remoteFile(
 			continue
 		}
 		defer file.Close()
+
+		session, err := client.NewSession()
+		if err != nil {
+			log.Print(err)
+			return
+		}
+		defer session.Close()
+
+		reader, err := session.StdoutPipe()
+		if err != nil {
+			log.Print(err)
+			return
+		}
 
 		if err := session.Start("cat " + path.BasePath + "/" + path.Filename); err != nil {
 			log.Print(err)
