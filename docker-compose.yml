@@ -11,6 +11,7 @@ services:
             - ./src:/app/src:rw
             - ./storage:/app/storage:rw
         working_dir: /app
+        restart: unless-stopped
         command: sh -c "go build -C ./src -o main && ./src/main"
 
 networks:
