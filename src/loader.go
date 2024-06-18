@@ -134,10 +134,10 @@ func remoteFile(
 			log.Print(err)
 			continue
 		}
-	}
 
-	if err := session.Wait(); err != nil {
-		log.Print(err)
-		return
+		if err := session.Wait(); err != nil {
+			log.Print(err)
+			continue
+		}
 	}
 }
